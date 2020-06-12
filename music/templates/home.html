@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-<form method='post' action='/m' enctype="multipart/form-data">
-  <fieldset>
-    <input type='file' name='new_song'>
-    <label>Title</label>
-    <input name='title' value=''>
-    <label>Artists</label>
-    <input name='artists' value=''>
-    <label>Album</label>
-    <input name='album' value=''><br>
-    <input type='submit' value='Upload new song'>
-  </fieldset>
-</form>
+<h2>Search</h2>
 <form method='post'>
   <fieldset>
     <input type='submit' value='Search for' width='20%'>
@@ -25,6 +14,19 @@
   </li>
   {% endfor %}
 </ul>
+<h2>Add a new title</h2>
+<form method='post' action='/m' enctype="multipart/form-data">
+  <fieldset>
+    <input type='file' name='new_song'>
+    <label>Title</label>
+    <input name='title' value=''>
+    <label>Artists</label>
+    <input name='artists' value=''>
+    <label>Album</label>
+    <input name='album' value=''><br>
+    <input type='submit' value='Upload new song'>
+  </fieldset>
+</form>
 <hr>
 <h2>Title listing</h2>
 <ul>
