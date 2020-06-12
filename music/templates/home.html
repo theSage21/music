@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block body %}
+<form method='post'>
+    <input type='submit' value='Search for' width='20%'>
+    <input name='query' placeholder=' Song/Artist/Album' width='80%' value='{{ query }}'>
+</form>
+<ul>
+  {% for m in matches %}
+  <li>
+    <a href='{{ m.play_url }}'> {{ m.display() }} </a>
+  </li>
+  {% endfor %}
+</ul>
+<hr>
+<h2>Title listing</h2>
+<ul>
+  {% for m in music_titles %}
+  <li>
+    <a href='{{ m.play_url }}'> {{ m.display() }} </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

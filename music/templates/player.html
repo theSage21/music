@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>{{ title }}</h2>
+<b>{{ album }} | {{ artists }}</b>
+<a target='_blank' href='/static/{{ slug }}.mp3'><button>Download</button></a>
+<hr>
+<audio controls>
+  <source src="/static/{{ slug }}.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio> 
+{% endblock %}
