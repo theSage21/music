@@ -1,3 +1,4 @@
+import os
 import hashlib
 from sqlalchemy import Column, Integer, String, or_
 from sqlalchemy.orm import relationship
@@ -100,6 +101,12 @@ def play(slug):
     )
 
 
-@app.route("/m/<slug>", methods=["DELETE"])
+@app.route("/delete/<slug>", methods=["GET"])
 def delete_a_file(slug):
-    pass
+    m = db.session.query(Music).filter_by(md5=slug).first()
+    if m is None:
+        abort(404)
+    os.remove(f"music/static/{m.md5}.mp3")
+    db.session.delete(m)
+    db.session.commit()
+    return redirect(url_for("home"))

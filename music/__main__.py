@@ -1,4 +1,5 @@
 import os
+import shutil
 import argparse
 from music.server import app
 
@@ -21,8 +22,8 @@ if args.add_dummy_data:
         )
         db.session.add(m)
         target = f"music/static/{m.md5}.mp3"
-        if not os.path.islink(target):
-            os.symlink(os.path.abspath("music/static/kammo"), target)
+        if not os.path.exists(target):
+            shutil.copyfile(os.path.abspath("music/static/kammo"), target)
     db.session.commit()
 
 app.run(port=args.port, debug=args.debug)
