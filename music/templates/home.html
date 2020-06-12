@@ -1,8 +1,22 @@
 {% extends 'base.html' %}
 {% block body %}
+<form method='post' action='/m' enctype="multipart/form-data">
+  <fieldset>
+    <input type='file' name='new_song'>
+    <label>Title</label>
+    <input name='title' value=''>
+    <label>Artists</label>
+    <input name='artists' value=''>
+    <label>Album</label>
+    <input name='album' value=''><br>
+    <input type='submit' value='Upload new song'>
+  </fieldset>
+</form>
 <form method='post'>
+  <fieldset>
     <input type='submit' value='Search for' width='20%'>
     <input name='query' placeholder=' Song/Artist/Album' width='80%' value='{{ query }}'>
+  </fieldset>
 </form>
 <ul>
   {% for m in matches %}

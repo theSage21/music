@@ -43,7 +43,7 @@ db.create_all()
 @app.route("/", methods=["GET", "POST"])
 def home(offset=0, limit=1000):
     # Pagination needs to be added. This large limit should suffice till then
-    matches = []
+    matches, query = [], ""
     if request.method == "POST" and "query" in request.form:
         query = request.form.get("query")
         matches = (
@@ -60,7 +60,7 @@ def home(offset=0, limit=1000):
     return render_template(
         "home.html",
         matches=matches,
-        query=query if query is not None else "",
+        query=query,
         music_titles=db.session.query(Music)
         .order_by(Music.title)
         .offset(offset)
@@ -70,7 +70,20 @@ def home(offset=0, limit=1000):
 
 @app.route("/m", methods=["POST"])
 def upload_a_file():
-    pass
+    f = request.files["new_song"]
+    m = Music.new_upload(
+        content=f.read(),
+        title=request.form.get("title") or f.filename,
+        artists=request.form.get("artists") or "",
+        album=request.form.get("album") or "",
+    )
+    if db.session.query(Music).filter_by(md5=m.md5).first() is not None:
+        return redirect("home")
+    db.session.add(m)
+    db.session.commit()
+    f.seek(0)
+    f.save(f"music/static/{m.md5}.mp3")
+    return redirect(url_for("home"))
 
 
 @app.route("/m/<slug>", methods=["GET"])
